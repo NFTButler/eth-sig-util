@@ -441,7 +441,7 @@ function signTypedData(privateKey, msgParams) {
     catch (err) {
         data = msgParams.data;
     }
-    const message = TypedDataUtils.sign(msgParams.data, false);
+    const message = TypedDataUtils.sign(data, false);
     const sig = ethUtil.ecsign(message, privateKey);
     return ethUtil.bufferToHex(concatSig(sig.v, sig.r, sig.s));
 }
