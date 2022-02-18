@@ -597,6 +597,12 @@ function signTypedData<T extends MessageTypes>(
   privateKey: Buffer,
   msgParams: MsgParams<TypedData | TypedMessage<T>>
 ): string {
+  let data;
+  try {
+      data = typeof msgParams.data === 'string' ? JSON.parse(msgParams.data) : msgParams.data;
+  } catch (err) {
+      data = msgParams.data;
+  }
   const message = TypedDataUtils.sign(msgParams.data, false);
   const sig = ethUtil.ecsign(message, privateKey);
   return ethUtil.bufferToHex(concatSig(sig.v, sig.r, sig.s));
